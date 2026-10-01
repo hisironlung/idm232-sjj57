@@ -1,8 +1,10 @@
-<h1>Hi</h1>
+<?php declare(strict_types=1);
+?>
+<h3>Hi</h3>
 <?php
   echo "<p>Hello world</p>";
 ?>
-<img src="images\gumball.jpeg" alt="" width="30">;
+<img src="images\gumball.jpeg" alt="" width="70">
 <?php
-  echo "<h3>this is gumball</h3>";
+  echo "<p>this is gumball</p>";
 ?>
