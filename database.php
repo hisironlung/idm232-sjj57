@@ -15,7 +15,7 @@ try {
   exit('Connection failed: ' . $e->getMessage());
 }
 
-$result = mysqli_query($conn, 'SELECT * FROM recipes');
+$result = mysqli_query($conn, 'SELECT * FROM recipes_data');
 $recipes = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 foreach ($recipes as $recipe) {
