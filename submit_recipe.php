@@ -48,7 +48,7 @@
         <?php endforeach;?> 
     <?php endif; ?>
 
-    <?php if ($success === true):?>
+    <?php if ($success === true): ?>
         <p><?php echo 'Recipe Submitted'?></p>
         <p>You added: <?php echo e($name)?></p>
     <?php endif; ?>
