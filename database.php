@@ -33,7 +33,7 @@ try {
 ";
 $result = mysqli_query($conn, $sql);*/
 
-$sql = "
+/*$sql = "
   INSERT INTO recipes (title, description)
   VALUES (
     'Ancho-Orange Chicken',
@@ -49,7 +49,7 @@ $sql = "
     'with Mashed Potatoes'
   )
 ";
-mysqli_query($conn, $sql);
+mysqli_query($conn, $sql);*/
 
 
 /*$result = mysqli_query(
