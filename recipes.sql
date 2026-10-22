@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2026 at 11:14 PM
+-- Generation Time: Oct 22, 2026 at 07:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -27,35 +27,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `recipes`
 --
 
-CREATE TABLE `recipes` (
+/*CREATE TABLE `recipes` (
   `id` int(11) NOT NULL,
   `title` varchar(120) NOT NULL,
   `description` text DEFAULT NULL,
+  `category_id` int(11) NOT NULL,
+  `servings` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `recipes`
---
-
-INSERT INTO `recipes` (`id`, `title`, `description`, `created_at`) VALUES
-(4, 'Ancho-Orange Chicken', 'with Kale Rice & Roasted Carrots', '2026-10-15 17:19:29'),
-(8, 'Beef Medallions & Mushroom Sauce', 'with Mashed Potatoes', '2026-10-15 17:30:04'),
-(11, 'Ancho-Orange Chicken', 'with Kale Rice & Roasted Carrots', '2026-10-15 21:12:04'),
-(12, 'Beef Medallions & Mushroom Sauce', 'with Mashed Potatoes', '2026-10-15 21:12:04');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `recipes_data`
---
-
-CREATE TABLE `recipes_data` (
-  `ancho-orange-chicken` int(11) NOT NULL,
-  `beef-medallions-mushroom-sauce` int(11) NOT NULL,
-  `broccoli-basil-pesto-sandwiches` int(11) NOT NULL,
-  `broccoli-mozzarella-calzones` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;*/
 
 --
 -- Indexes for dumped tables
@@ -75,9 +54,42 @@ ALTER TABLE `recipes`
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
+
+INSERT INTO recipes
+  (title, description, servings)
+VALUES(
+  'Ancho-Orange Chicken',
+  'with Kale Rice & Roasted Carrots',
+  4,
+)
+
+INSERT INTO recipes
+  (title, description, servings)
+VALUES(
+  'Beef Medallions & Mushroom Sauce',
+  'with Mashed Potatoes',
+  2,
+)
+
+INSERT INTO recipes
+  (title, description, servings)
+VALUES(
+  'Broccoli & Basil Pesto Sandwiches',
+  'with Romaine & Citrus Salad',
+  4,
+)
+
+INSERT INTO recipes
+  (title, description, servings)
+VALUES(
+  'Broccoli & Mozzarella Calzones',
+  'with Caesar Salad',
+  4,
+)
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

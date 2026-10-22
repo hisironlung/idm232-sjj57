@@ -21,6 +21,7 @@
   <h2>Directory</h2>
   <a href="submit_recipe.php">Assignment 2</a>
   <a href="database.php">Assignment 3</a>
+  <a href="recipes_foundation.php">Assignment 4</a>
 
 
 
