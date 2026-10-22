@@ -52,14 +52,33 @@
         )
     ";
     $result = mysqli_query($conn, $sql);*/
-
-    $result = mysqli_query($conn, 'SELECT * FROM recipes');
-    $recipes = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-    foreach ($recipes as $recipe) {
-        echo $recipe['title'] . '<br>';
-    }
-
-
-
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipes</title>
+</head>
+<body>
+  <?php foreach ($recipes as $recipe) { ?>
+
+    <h3>
+      <?php echo htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8'); ?>
+    </h3>
+
+    <p>
+      <?php echo htmlspecialchars($recipe['description'], ENT_QUOTES, 'UTF-8'); ?>
+    </p>
+
+    <h3>Servings:</h3>
+
+    <p>
+      <?php echo htmlspecialchars((string) $recipe['servings'], ENT_QUOTES, 'UTF-8'); ?>
+    </p>
+
+  <?php } ?>
+    
+</body>
+</html>

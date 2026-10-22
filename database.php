@@ -62,10 +62,5 @@ echo $recipe['title'];*/
 $result = mysqli_query($conn, 'SELECT * FROM recipes');
 $recipes = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-foreach ($recipes as $recipe) {
-  echo $recipe['title'] . '<br>';
-}
-
-
 ?>
 
