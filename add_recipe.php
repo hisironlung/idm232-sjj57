@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <?php include 'post.php';?>
+    <?php include 'config.php';?>
     <header>
         <div>
             <a href="index.php"><h1>Kellin's Cookbook</h1></a>

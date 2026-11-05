@@ -1,25 +1,39 @@
 <?php
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+declare(strict_types=1);
+
+session_start();
 
 require 'config.php';
 
 $email = trim($_POST['email'] ?? '');
 $plain = $_POST['password'] ?? '';
-$message = '';
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($email === '' || $plain === '') {
-    $message = 'Email and password are required.';
+    $error = 'Email and password are required.';
   } else {
-    $hash = password_hash($plain, PASSWORD_DEFAULT);
-
-    mysqli_execute_query(
+    $result = mysqli_execute_query(
       $conn,
-      'INSERT INTO users (email, password_hash) VALUES (?, ?)',
-      [$email, $hash]
+      'SELECT id, email, password_hash FROM users WHERE email = ?',  [$email]
     );
 
-    $message = 'Account created successfully.';
+    $user = mysqli_fetch_assoc($result);
+
+    if (
+      $user &&
+      password_verify($plain, $user['password_hash'])
+    ) {
+      session_regenerate_id(true);
+
+      $_SESSION['user_id'] = $user['id'];
+      $_SESSION['email'] = $user['email'];
+
+      header('Location: admin.php');
+      exit;
+    }
+
+    $error = 'Invalid email or password.';
   }
 }
 
@@ -33,10 +47,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Login</title>
 </head>
 <body>
-    <h1>Create Account</h1>
+    
+    <?php if ($error !== '') { ?>
+    <p>
+      <?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?>
+    </p>
+  <?php } ?>
 
+    <form method="POST">
+    <div>
+      <label for="email">Email</label>
 
+      <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>" required>
+    </div>
 
+    <div>
+      <label for="password">Password</label>
+
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+      >
+    </div>
+
+    <button type="submit">Log In</button>
+  </form>
+
+  <a href="index.php">Back</a>
 
 
 </body>

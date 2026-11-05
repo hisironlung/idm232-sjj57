@@ -192,3 +192,28 @@ label{
 #errors{
     color: var(--red);
 }
+
+#login{
+    background-color: var(--black);
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding: 2vw;
+    row-gap: 3vw;
+    margin-top: 3vw;
+    align-items: center;
+}
+
+#login div{
+    background-color: var(--orange);
+    padding: 1vw;
+    width: fit-content;
+    border-radius: 0.5vw;
+}
+
+#login a{
+    color: var(--white);
+    font-size: 2vw;
+    font-family: Jacques Francois, serif;
+    font-weight: bold;
+}
