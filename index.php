@@ -1,31 +1,95 @@
 <?php 
   declare(strict_types=1);
+
+  mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+    $host = 'localhost';
+    $user = 'root';
+    $pass = '';
+    $db = 'recipes';
+
+    try {
+    $conn = mysqli_connect($host, $user, $pass, $db);
+    mysqli_set_charset($conn, 'utf8mb4');
+    } catch (mysqli_sql_exception $e) {
+    exit('Connection failed: ' . $e->getMessage());
+    }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookbook</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <h3>Hi</h3>
-  <?php
-  echo "<p>Hello world</p>";
-  ?>
-  <img src="images\gumball.jpeg" alt="" width="70">
-  <?php
-    echo "<p>this is gumball</p>";
-  ?>  
+    <header>
+        <div>
+            <h1>
+                <a href="index.php">Kellin's Cookbook</a>
+            </h1>
+        </div>
 
-  <h2>Directory</h2>
-  <a href="submit_recipe.php">Assignment 2</a>
-  <a href="database.php">Assignment 3</a>
-  <a href="recipes_foundation.php">Assignment 4</a>
+        <div>
+            <h1>IDM 232</h1>
+        </div>
+    </header>
+
+    <section id="content">
+
+    <?php
+        $sql = "SELECT * FROM recipes";
+        $result = mysqli_query($conn, $sql);
+
+        echo '<div id="recipesgrid">';
+
+        foreach ($result as $recipe) {
+            echo '<div class="recipe">';
+            
+            echo '<h2>' . htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8') . '</h2>';
+            echo '<h3>' . htmlspecialchars($recipe['subtext'], ENT_QUOTES, 'UTF-8') . '</h3>';
+
+            echo '<div class="recipeimage">';
+            
+            echo '<img src="' . htmlspecialchars($recipe['image'], ENT_QUOTES, 'UTF-8') . '" alt="">';
+
+            echo '</div>';
+
+            echo '</div>';
+        }
+
+        
+
+    ?>
 
 
+
+
+    </section>
+
+
+    <section id="functions">
+
+        <a href="add_recipe.php">
+            <div>
+                <h3>Add Recipes</h3>
+            </div>
+        </a>
+
+        <a href="search_recipe.php">
+            <div>
+                <h3>Search Recipes</h3>
+            </div>
+        </a>
+
+    </section>
 
 
 </body>
-</html>
 
+</html>

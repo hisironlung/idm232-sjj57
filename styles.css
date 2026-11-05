@@ -1,0 +1,194 @@
+*{
+    box-sizing: border-box;
+}
+
+:root{
+    --orange: #b54305;
+    --red: #ff230a;
+    --black: #000;
+    --white: #fff;
+    --grey: #afa3a3;
+    --darkgrey: #837777;
+}
+
+@font-face {
+    font-family: 'Jacques Francois';
+    src: url('fonts/Jacques_Francois/JacquesFrancois-Regular.ttf');
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Jacques Francois, serif;
+    margin: 0;
+    padding: 0;
+}
+
+p, h1, h2, h3, h4{
+    margin: 0;
+}
+
+a{
+    color: var(--white);
+    text-decoration: none;
+}
+
+a:visited{
+    color: var(--white);
+    text-decoration: none;
+}
+
+header{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 5vw;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--black);
+    padding: 2vw 0;
+}
+
+header>div>h1>a{
+    text-decoration: none;
+}
+
+header h1{
+    font-size: 3vw;
+    color: var(--white);
+    margin: 0;
+}
+
+#content{
+    margin-top: 5vw;
+    padding: 2vw;
+    width: 100vw;
+}
+
+#content #recipesgrid{
+    display: grid;
+    grid-template-columns: 40% 40%;
+    width: 100%;
+    column-gap: 8vw;
+    row-gap: 8vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.recipe{
+    display: flex;
+    flex-direction: column;
+}
+
+.recipe img{
+    width: 100%;
+    height: auto;
+}
+
+.recipeimage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vw;
+}
+
+
+
+#functions{
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    column-gap: 8vw;
+    align-items: center;
+    justify-content: center;
+    padding: 3vw;
+    margin: 5vw 0;
+    background-color: var(--black);
+}
+
+#functions div{
+    background-color: var(--orange);
+    border-radius: 0.5vw;
+    padding: 1.5vw;
+    
+}
+
+#functions>div>h3>a{
+    text-decoration: none;
+    color: var(--white);
+    
+    
+}
+
+#functions h3{
+    font-size: 1.8vw;
+    color: var(--white);
+}
+
+#input{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: flex-start;
+    background-color: var(--black);
+    margin: 5vw;
+}
+
+#input p{
+    color: var(--white);
+}
+
+#recipedata{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding: 2vw;
+    align-items: flex-start;
+}
+
+#recipedata div{
+    margin: 1vw;
+}
+
+#stepdata{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding: 2vw;
+    align-items: flex-start;
+}
+
+#stepdata div{
+    margin: 1vw;
+}
+
+button{
+    background-color: var(--orange);
+    color: var(--black);
+    width: fit-content;
+    font-size: 1vw
+}
+
+#recipedata input{
+    border-style: solid;
+    border-color: var(--orange);
+    width: 50%;
+}
+
+#stepdata input{
+    border-style: solid;
+    border-color: var(--orange);
+}
+
+label{
+    font-size: 1.3vw;
+    margin-right: 0.5vw;
+    color: var(--white);
+}
+
+#errors{
+    color: var(--red);
+}
