@@ -55,9 +55,7 @@
 
             echo '</div>';
         }
-
-        
-
     ?>
+    </section>
 </body>
 </html>
