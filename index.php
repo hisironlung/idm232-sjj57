@@ -59,6 +59,31 @@
 
     </section>
 
+    <section id="content">
+
+    <?php
+        $sql = "SELECT * FROM recipes";
+        $result = mysqli_query($conn, $sql);
+
+        echo '<div class="recipesgrid">';
+
+        foreach ($result as $recipe) {
+            echo '<div class="recipe">';
+            
+            echo '<h2>' . htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8') . '</h2>';
+            echo '<h3>' . htmlspecialchars($recipe['subtext'], ENT_QUOTES, 'UTF-8') . '</h3>';
+
+            echo '<div class="recipeimage">';
+            
+            echo '<img src="' . htmlspecialchars($recipe['image'], ENT_QUOTES, 'UTF-8') . '" alt="">';
+
+            echo '</div>';
+
+            echo '</div>';
+        }
+    ?>
+    </section>
+
 
 
 

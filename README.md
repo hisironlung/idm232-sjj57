@@ -12,7 +12,8 @@ Open a web browser and navigate to the project through localhost. (http://localh
 # Admin Login
 To log in or create an account, select the 'Log in' button located on the header. You will be prompted to log in or create an account.
 
-
+# Which feature did I build?
+Both search and filter features have been inclued in this project. Navigate to the 'Search Recipes' button, either on the home page or the header. Search for recipes using any keyword (ex: chicken), and press the 'Search' button. To filter, click on the 'All Categories' dropdown, and select from the six categories provided.
 
 ## AI Use
 
