@@ -45,8 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+<article class="accounthead">
+    <h1>Log In</h1>
+</article>
     
     <?php if ($error !== '') { ?>
     <p>
@@ -54,7 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </p>
   <?php } ?>
 
-    <form method="POST">
+
+  <section class="account">
+    <form method="POST" >
     <div>
       <label for="email">Email</label>
 
@@ -74,8 +81,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <button type="submit">Log In</button>
   </form>
-
-  <a href="index.php">Back</a>
+  </section>
+    
+  <div class="lognav">
+    <a href="index.php">Back</a>
+  </div>
+  
 
 
 </body>

@@ -9,5 +9,11 @@ Enter the database credentials for your local MySQL installation; host, username
 Place the entire project folder inside the htdocs folder in your XAMPP or MAMP application folder.
 Open a web browser and navigate to the project through localhost. (http://localhost/idm232-abc123/)
 
+# Admin Login
+To log in or create an account, select the 'Log in' button located on the header. You will be prompted to log in or create an account.
+
+
+
 ## AI Use
+
 

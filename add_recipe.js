@@ -9,7 +9,10 @@ add_button.addEventListener('click', () => {
     new_step.classList.add('recipe_step');
     step_number++;
 
-    new_step.innerHTML = '<label for="steps">Step</label> <input type="text" class="steps" name="step" required/>';
+    new_step.innerHTML = `
+        <label>Step ${step_number}</label>
+        <input type="text" class="steps" name="steps[]" required>
+    `;
     
     steps.appendChild(new_step);
     
@@ -18,9 +21,10 @@ add_button.addEventListener('click', () => {
 
 remove_button.addEventListener('click', () => {
 
-    step_number--;
+    
     if (steps.children.length > 0) {
            steps.removeChild(steps.lastChild);
+           step_number--;
     }
 
     

@@ -16,23 +16,63 @@
         <div>
             <h1>IDM 232</h1>
         </div>
+
+        <div>
+            <a href="edit_recipe.php"><h4>Edit Recipes</h4></a>
+        </div>
+
+        <div>
+            <a href="search_recipe.php"><h4>Search Recipes</h4></a>
+        </div>
+
+        <div>
+            <a href="account.php"><h4>Log In</h4></a>
+        </div>
     </header>
 
-    <section id="input">
+    <article class="functionheader">
+        <h1>Add a Recipe</h1>
+    </article>
+
+
+    <section id="add">
         <form action="add_recipe.php" method="post" id="recipedata">
             <div>
                 <label for="recipe">Recipe Name</label>
                 <input type="text" id="recipe" name="recipe" required/>
-            </div id="category">
+            </div>
+
+            <div>
+                <label for="description">Recipe Description</label>
+                <textarea id="description" name="description" required></textarea>
+                <!--<input type="text" id="description" name="description" required/>-->
+            </div>
+
+            <div>
+                <label for="subtext">Recipe Subtext</label>
+                <input type="text" id="subtext" name="subtext" required/>
+            </div>
                 
             <div>
                 <label for="category">Recipe Category</label>
-                <input type="text" id="category" name="category" required/>
+                <select name="category" id="category">
+                    <option value="1">Chicken</option>
+                    <option value="2">Beef</option>
+                    <option value="3">Pork</option>
+                    <option value="4">Turkey</option>
+                    <option value="5">Seafood</option>
+                    <option value="6">Vegetarian</option>
+                </select>
             </div>
             
             <div id="servings">
                 <label for="servings">Recipe Servings</label>
                 <input type="number" id="servings" name="servings" required/>
+            </div>
+
+            <div>
+                <label for="image">Recipe Image URL</label>
+                <input type="text" id="image" name="image" required/>
             </div>
 
             <div>
@@ -51,31 +91,50 @@
 
         </form>
 
+        <div class="output">
 
-        <?php
+            <?php
             $recipe = '';
-            $category = '';
+            $description = '';
+            $subtext = '';
+            $category = 0;
             $servings = 0;
+            $image = '';
             $steps = [];
             $errors = [];
             $success = false;
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $recipe = trim($_POST['recipe'] ?? '');
-                    $category = trim($_POST['category'] ?? '');
-                    $servings = trim($_POST['servings'] ?? '');
-                    $steps = trim($_POST['step'] ?? '');
+                    $description = trim($_POST['description'] ?? '');
+                    $subtext = trim($_POST['subtext'] ?? '');
+                    $category = (int) ($_POST['category'] ?? 0);
+                    $servings = (int) ($_POST['servings'] ?? 0);
+                    $image = trim($_POST['image'] ?? '');
+                    $steps = $_POST['steps'] ?? [];
             
                 if ($recipe === '') {
                     $errors[] = 'Recipe name is required.';
                 }
 
-                if ($category === '') {
+                if ($description === '') {
+                    $errors[] = 'Recipe description is required.';
+                }
+
+                if ($subtext === '') {
+                    $errors[] = 'Recipe subtext is required.';
+                }
+
+                if ($category <= 0) {
                     $errors[] = 'Recipe category is required.';
                 }
 
-                if ($servings === 0) {
+                if ($servings <= 0) {
                     $errors[] = 'Recipe servings are required.';
+                }
+
+                if ($image === '') {
+                    $errors[] = 'Recipe image URL is required.';
                 }
 
                 if (empty($steps)){
@@ -83,29 +142,66 @@
                 }
 
                 if (empty($errors)) {
+                    $result = mysqli_execute_query(
+                        $conn,
+                        'INSERT INTO recipes (title, description, subtext, category_id, image, servings)
+                        VALUES (?, ?, ?, ?, ?, ?)',
+                        [$recipe, $description, $subtext, $category, $image, $servings]
+                    );
+
                     $success = true;
                 }
             }
         ?>
 
-        <?php if (!empty($errors)):
+        <?php if (!empty($errors)): ?>
 
-        foreach ($errors as $error): ?> 
-          <p id="errors"> <?php echo ($error) ?> </p>
-        <?php endforeach; 
-        endif;
+            <?php foreach ($errors as $error): ?>
+                <p class="errors">
+                    <?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?>
+                </p>
+            <?php endforeach; ?>
 
-        if ($success === true): ?>
-            <h4> <?php echo 'Recipe Submitted' ?> </h4>
-            <p>You added: <?php echo ($recipe) ?> </p>
-            <p>Category: <?php echo ($category) ?> </p>
-            <p>Servings: <?php echo ($servings) ?> </p>
-            <p>Steps: <?php foreach ($steps as $step): ?> 
-                 <?php echo ($step) ?>
-                <?php endforeach; ?> </p>
         <?php endif; ?>
 
+
+        <?php if ($success === true): ?>
+
+            <h3>Recipe Submitted!</h3>
+
+            <!--<p>
+                You added:
+                <?php //echo htmlspecialchars($recipe, ENT_QUOTES, 'UTF-8'); ?>
+            </p>
+
+            <p>
+                Category:
+                <?php //echo htmlspecialchars($category, ENT_QUOTES, 'UTF-8'); ?>
+            </p>
+
+            <p>
+                Servings:
+                <?php //echo htmlspecialchars((string) $servings, ENT_QUOTES, 'UTF-8'); ?>
+            </p>
+
+            <p>Steps:</p>
+
+            <?php //foreach ($steps as $step): ?>
+                <p>
+                    <?php //echo htmlspecialchars($step, ENT_QUOTES, 'UTF-8'); ?>
+                </p>
+            <?php //endforeach; ?>
+
+        <?php endif; ?>
+
+
+        </div>
+
+
+        
+
     </section>
+
 
     <script src="add_recipe.js"></script>
 </body>
