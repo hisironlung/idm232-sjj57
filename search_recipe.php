@@ -118,32 +118,67 @@
 
     <section id="results">
 
-        <?php if (empty($recipes)): ?>
+    <?php if (empty($recipes)): ?>
 
         <p>No recipes found.</p>
 
-        <?php else: ?>
+    <?php else: ?>
 
-            <?php echo '<div class="recipesgrid">';
+        <div class="recipesgrid">
 
-        foreach ($result as $recipe) {
-            echo '<div class="recipe">';
-            
-            echo '<h2>' . htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8') . '</h2>';
-            echo '<h3>' . htmlspecialchars($recipe['subtext'], ENT_QUOTES, 'UTF-8') . '</h3>';
+            <?php foreach ($recipes as $recipe): ?>
 
-            echo '<div class="recipeimage">';
-            
-            echo '<img src="' . htmlspecialchars($recipe['image'], ENT_QUOTES, 'UTF-8') . '" alt="">';
+                <a
+                    href="recipe.php?id=<?php echo (int) $recipe['id']; ?>"
+                    class="recipe"
+                >
 
-            echo '</div>';
+                    <h2>
+                        <?php
+                        echo htmlspecialchars(
+                            $recipe['title'],
+                            ENT_QUOTES,
+                            'UTF-8'
+                        );
+                        ?>
+                    </h2>
 
-            echo '</div>';
-        }?>
+                    <h3>
+                        <?php
+                        echo htmlspecialchars(
+                            $recipe['subtext'],
+                            ENT_QUOTES,
+                            'UTF-8'
+                        );
+                        ?>
+                    </h3>
 
-        <?php endif; ?>
+                    <div class="recipeimage">
 
-    </section>
+                        <img
+                            src="<?php echo htmlspecialchars(
+                                $recipe['image'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            ); ?>"
+                            alt="<?php echo htmlspecialchars(
+                                $recipe['title'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            ); ?>"
+                        >
+
+                    </div>
+
+                </a>
+
+            <?php endforeach; ?>
+
+        </div>
+
+    <?php endif; ?>
+
+</section>
 
 </body>
 </html>

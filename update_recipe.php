@@ -53,6 +53,8 @@
     if (isset($_POST['update_recipe'])) {
         $recipe_id = (int) ($_POST['recipe_id'] ?? 0);
         $title = trim($_POST['title'] ?? '');
+        $subtext = trim($_POST['subtext'] ?? '');
+        $description = trim($_POST['description'] ?? '');
         $category = (int) ($_POST['category'] ?? 0);
         $servings = (int) ($_POST['servings'] ?? 0);
 
@@ -61,6 +63,14 @@
         }
 
         if ($title === '') {
+            $errors[] = 'Recipe name is required.';
+        }
+
+        if ($subtext === '') {
+            $errors[] = 'Recipe name is required.';
+        }
+
+        if ($description === '') {
             $errors[] = 'Recipe name is required.';
         }
 
@@ -76,7 +86,7 @@
             mysqli_execute_query(
                 $conn,
                 'UPDATE recipes
-                SET title = ?, category_id = ?, servings = ?
+                SET title = ?, subtext = ?, description = ?, category_id = ?, servings = ?
                 WHERE id = ?',
                 [$title, $category, $servings, $recipe_id]
             );
@@ -91,7 +101,7 @@
         if ($recipe_id > 0) {
             $result = mysqli_execute_query(
                 $conn,
-                'SELECT id, title, category_id, servings
+                'SELECT id, title, subtext, description, category_id, servings
                 FROM recipes
                 WHERE id = ?',
                 [$recipe_id]
@@ -143,6 +153,18 @@
                 <label for="title">Recipe Name</label>
 
                 <input type="text" name="title" id="title" value="<?php echo htmlspecialchars($selected_recipe['title'], ENT_QUOTES, 'UTF-8'); ?>" required>
+            </div>
+
+            <div>
+                <label for="subtext">Recipe Subtext</label>
+
+                <input type="text" name="subtext" id="subtext" value="<?php echo htmlspecialchars($selected_recipe['subtext'], ENT_QUOTES, 'UTF-8'); ?>" required>
+            </div>
+
+            <div>
+                <label for="description">Recipe Description</label>
+
+                <textarea type="text" name="description" id="description" required><?php echo htmlspecialchars($selected_recipe['description'], ENT_QUOTES, 'UTF-8'); ?></textarea>
             </div>
 
 

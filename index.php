@@ -42,47 +42,148 @@
 
     </section>
 
-
-    <section id="functions">
-
-        <a href="edit_recipe.php">
-            <div>
-                <h3>Edit Recipes</h3>
-            </div>
-        </a>
-
-        <a href="search_recipe.php">
-            <div>
-                <h3>Search Recipes</h3>
-            </div>
-        </a>
-
-    </section>
-
-    <section id="content">
-
     <?php
-        $sql = "SELECT * FROM recipes";
-        $result = mysqli_query($conn, $sql);
 
-        echo '<div class="recipesgrid">';
+    $search = trim($_GET['search'] ?? '');
+    $category = (int) ($_GET['category'] ?? 0);
 
-        foreach ($result as $recipe) {
-            echo '<div class="recipe">';
-            
-            echo '<h2>' . htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8') . '</h2>';
-            echo '<h3>' . htmlspecialchars($recipe['subtext'], ENT_QUOTES, 'UTF-8') . '</h3>';
+    if ($search !== '' && $category > 0) {
 
-            echo '<div class="recipeimage">';
-            
-            echo '<img src="' . htmlspecialchars($recipe['image'], ENT_QUOTES, 'UTF-8') . '" alt="">';
+    $result = mysqli_execute_query(
+        $conn,
+        'SELECT *
+         FROM recipes
+         WHERE title LIKE ?
+         AND category_id = ?',
+        ['%' . $search . '%', $category]
+    );
 
-            echo '</div>';
+    } elseif ($search !== '') {
 
-            echo '</div>';
-        }
+        $result = mysqli_execute_query(
+            $conn,
+            'SELECT *
+            FROM recipes
+            WHERE title LIKE ?',
+            ['%' . $search . '%']
+        );
+
+    } elseif ($category > 0) {
+
+        $result = mysqli_execute_query(
+            $conn,
+            'SELECT *
+            FROM recipes
+            WHERE category_id = ?',
+            [$category]
+        );
+
+    } else {
+
+        $result = mysqli_execute_query(
+            $conn,
+            'SELECT *
+            FROM recipes'
+        );
+
+    }
+
+    $recipes = mysqli_fetch_all(
+            $result, MYSQLI_ASSOC
+        );
+
     ?>
+
+
+    <section id="searchform">
+
+        <form action="search_recipe.php" method="get" id="searchbar">
+
+            <input type="text" id="search" name="search" placeholder="Search recipes..." value="<?php echo htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>">
+
+            <label for="category">Filter</label>
+
+            <select name="category" id="category">
+                <option value="">All Categories</option>
+                <option value="1" <?php if ($category === 1) echo 'selected'; ?>>Chicken</option>
+                <option value="2" <?php if ($category === 2) echo 'selected'; ?>>Beef</option>
+                <option value="3" <?php if ($category === 3) echo 'selected'; ?>>Pork</option>
+                <option value="4" <?php if ($category === 4) echo 'selected'; ?>>Turkey</option>
+                <option value="5" <?php if ($category === 5) echo 'selected'; ?>>Seafood</option>
+                <option value="6" <?php if ($category === 6) echo 'selected'; ?>>Vegetarian</option>
+            </select>
+
+
+            <button type="submit">Search</button>
+
+        </form>
+        
+
     </section>
+
+    <section id="results">
+
+    <?php if (empty($recipes)): ?>
+
+        <p>No recipes found.</p>
+
+    <?php else: ?>
+
+        <div class="recipesgrid">
+
+            <?php foreach ($recipes as $recipe): ?>
+
+                <a
+                    href="recipe.php?id=<?php echo (int) $recipe['id']; ?>"
+                    class="recipe"
+                >
+
+                    <h2>
+                        <?php
+                        echo htmlspecialchars(
+                            $recipe['title'],
+                            ENT_QUOTES,
+                            'UTF-8'
+                        );
+                        ?>
+                    </h2>
+
+                    <h3>
+                        <?php
+                        echo htmlspecialchars(
+                            $recipe['subtext'],
+                            ENT_QUOTES,
+                            'UTF-8'
+                        );
+                        ?>
+                    </h3>
+
+                    <div class="recipeimage">
+
+                        <img
+                            src="<?php echo htmlspecialchars(
+                                $recipe['image'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            ); ?>"
+                            alt="<?php echo htmlspecialchars(
+                                $recipe['title'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            ); ?>"
+                        >
+
+                    </div>
+
+                </a>
+
+            <?php endforeach; ?>
+
+        </div>
+
+    <?php endif; ?>
+
+</section>
 
 
 
