@@ -23,7 +23,7 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
     <div class="lognav">
-      <a href="homepage.php">Go to Cookbook</a>
+      <a href="index.php">Go to Cookbook</a>
       <a href="logout.php">Log out</a>
     </div>
 

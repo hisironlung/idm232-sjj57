@@ -1,3 +1,16 @@
+<?php
+declare(strict_types=1);
+
+session_start();
+
+require 'config.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: account.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,10 +32,6 @@
 
         <div>
             <a href="edit_recipe.php"><h4>Edit Recipes</h4></a>
-        </div>
-
-        <div>
-            <a href="search_recipe.php"><h4>Search Recipes</h4></a>
         </div>
 
         <div>

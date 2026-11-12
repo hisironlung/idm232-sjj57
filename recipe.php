@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+session_start();
+
 require 'config.php';
 
 $recipe_id = (int) ($_GET['id'] ?? 0);
@@ -49,10 +51,6 @@ if (!$recipe) {
         </div>
 
         <div>
-            <a href="search_recipe.php"><h4>Search Recipes</h4></a>
-        </div>
-
-        <div>
             <a href="account.php"><h4>Log In</h4></a>
         </div>
     </header>
@@ -85,6 +83,8 @@ if (!$recipe) {
 
                 <div class="recipeactions">
 
+                    <?php if (isset($_SESSION['user_id'])): ?>
+
                     <form action="update_recipe.php" method="post">
                         <input type="hidden" name="recipe_id" value="<?php echo (int) $recipe['id']; ?>">
 
@@ -97,6 +97,8 @@ if (!$recipe) {
 
                         <button type="submit" name="delete_recipe">Delete Recipe</button>
                     </form>
+
+                    <?php endif; ?>
 
                 </div>
 

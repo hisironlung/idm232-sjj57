@@ -32,10 +32,6 @@
         </div>
 
         <div>
-            <a href="search_recipe.php"><h4>Search Recipes</h4></a>
-        </div>
-
-        <div>
             <a href="account.php"><h4>Log In</h4></a>
         </div>
     </header>
