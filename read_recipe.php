@@ -27,10 +27,6 @@
         <div>
             <a href="edit_recipe.php"><h4>Edit Recipes</h4></a>
         </div>
-
-        <div>
-            <a href="search_recipe.php"><h4>Search Recipes</h4></a>
-        </div>
     </header>
 
     <section id="content">

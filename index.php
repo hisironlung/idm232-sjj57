@@ -1,6 +1,8 @@
 <?php 
   declare(strict_types=1);
   
+  session_start();
+
   require 'config.php';
 ?>
 
@@ -27,13 +29,24 @@
             <h1>IDM 232</h1>
         </div>
 
-        <div>
-            <a href="edit_recipe.php"><h4>Edit Recipes</h4></a>
-        </div>
+        <?php if (isset($_SESSION['user_id'])) { ?>
+            <div>
+                <a href="edit_recipe.php">Edit Recipes</a>
+            </div>
+                
+        <?php } ?>
 
-        <div>
-            <a href="account.php"><h4>Log In</h4></a>
-        </div>
+        <?php if (isset($_SESSION['user_id'])) { ?>
+            <div>
+                <a href="account.php">Account</a>
+            </div>
+                
+        <?php } 
+        else{?>
+            <div>
+                <a href="account.php"><h4>Log In</h4></a>
+            </div>
+        <?php }?>
     </header>
 
     </section>
@@ -93,7 +106,7 @@
 
     <section id="searchform">
 
-        <form action="search_recipe.php" method="get" id="searchbar">
+        <form action="index.php" method="get" id="searchbar">
 
             <input type="text" id="search" name="search" placeholder="Search recipes..." value="<?php echo htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>">
 
@@ -182,7 +195,38 @@
 </section>
 
 
+<footer>
+    <article>
+        <div>
+            <h1>
+                <a href="index.php">Kellin's Cookbook</a>
+            </h1>
+        </div>
 
+    <div>
+        <h1>IDM 232</h1>
+    </div>
+    </article>
+    
+
+    <?php if (isset($_SESSION['user_id'])) { ?>
+        <div>
+            <a href="edit_recipe.php">Edit Recipes</a>
+        </div>
+                
+    <?php } ?>
+
+    <?php if (isset($_SESSION['user_id'])) { ?>
+        <div>
+            <a href="account.php">Account</a>
+        </div>
+                
+    <?php } else{?>
+        <div>
+            <a href="account.php"><h4>Log In</h4></a>
+        </div>
+    <?php }?>
+</footer>
 
     
 

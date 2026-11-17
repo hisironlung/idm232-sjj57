@@ -83,7 +83,7 @@ if (!$recipe) {
 
                 <div class="recipeactions">
 
-                    <?php if (isset($_SESSION['user_id'])): ?>
+                    <?php if (isset($_SESSION['user_id'])) { ?>                
 
                     <form action="update_recipe.php" method="post">
                         <input type="hidden" name="recipe_id" value="<?php echo (int) $recipe['id']; ?>">
@@ -91,6 +91,9 @@ if (!$recipe) {
                         <button type="submit" name="edit_recipe">Update Recipe</button>
                     </form>
 
+                    <?php } ?>
+
+                    <?php if (isset($_SESSION['user_id'])) { ?> 
 
                     <form action="delete_recipe.php" method="post" onsubmit="return confirm('Are you sure you want to delete this recipe?');">
                         <input type="hidden" name="recipe_id" value="<?php echo (int) $recipe['id']; ?>">
@@ -98,7 +101,7 @@ if (!$recipe) {
                         <button type="submit" name="delete_recipe">Delete Recipe</button>
                     </form>
 
-                    <?php endif; ?>
+                    <?php } ?>
 
                 </div>
 

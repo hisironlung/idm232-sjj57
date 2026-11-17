@@ -79,6 +79,10 @@ header h1{
     justify-content: center;
 }
 
+#results{
+    margin-bottom: 4vw;
+}
+
 .recipe{
     display: flex;
     flex-direction: column;
@@ -144,6 +148,10 @@ header h1{
     width: fit-content;
 }
 
+#recipedata div #image{
+    color: var(--white);
+}
+
 #add p{
     color: var(--white);
 }
@@ -204,7 +212,8 @@ button{
     background-color: var(--orange);
     color: var(--black);
     width: fit-content;
-    font-size: 1vw
+    font-size: 1vw;
+    font-family: Jacques Francois, serif;
 }
 
 #recipedata input, #recipedata select, #recipedata textarea{
@@ -215,6 +224,10 @@ button{
 #stepdata input{
     border-style: solid;
     border-color: var(--orange);
+}
+
+select{
+    font-family: Jacques Francois, serif;
 }
 
 label{
@@ -245,6 +258,11 @@ label{
 
 #searchbar input{
     font-size: 2vw;
+    font-family: Jacques Francois, serif;
+}
+
+#searchbar button{
+    font-size: 1rem;
 }
 
 #errors{
@@ -393,4 +411,22 @@ label{
 .recipeactions button{
     width: fit-content;
     font-size: 1.5vw;
+}
+
+footer{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 5vw;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--orange);
+    padding: 3vw 2vw;
+    color: white;
+}
+
+footer article{
+    display: flex;
+    flex-direction: column;
 }

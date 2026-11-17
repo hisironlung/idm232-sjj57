@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </section>
     
   <div class="lognav">
-    <a href="index.php">Back</a>
+    <a href="account.php">Back</a>
   </div>
   
 

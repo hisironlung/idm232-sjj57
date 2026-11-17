@@ -20,7 +20,6 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <?php include 'config.php';?>
     <header>
         <div>
             <a href="index.php"><h1>Kellin's Cookbook</h1></a>
@@ -45,7 +44,7 @@ if (!isset($_SESSION['user_id'])) {
 
 
     <section id="add">
-        <form action="add_recipe.php" method="post" id="recipedata">
+        <form action="add_recipe.php" method="post" enctype="multipart/form-data" id="recipedata">
             <div>
                 <label for="recipe">Recipe Name</label>
                 <input type="text" id="recipe" name="recipe" required/>
@@ -80,8 +79,8 @@ if (!isset($_SESSION['user_id'])) {
             </div>
 
             <div>
-                <label for="image">Recipe Image URL</label>
-                <input type="text" id="image" name="image" required/>
+                <label for="image">Recipe Image</label>
+                <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png,.webp" required>
             </div>
 
             <div>
@@ -108,8 +107,9 @@ if (!isset($_SESSION['user_id'])) {
             $subtext = '';
             $category = 0;
             $servings = 0;
-            $image = '';
             $steps = [];
+            $upload_folder = __DIR__ . '/assets/images/uploads/';
+            $image = '';
             $errors = [];
             $success = false;
 
@@ -119,7 +119,6 @@ if (!isset($_SESSION['user_id'])) {
                     $subtext = trim($_POST['subtext'] ?? '');
                     $category = (int) ($_POST['category'] ?? 0);
                     $servings = (int) ($_POST['servings'] ?? 0);
-                    $image = trim($_POST['image'] ?? '');
                     $steps = $_POST['steps'] ?? [];
             
                 if ($recipe === '') {
@@ -142,15 +141,59 @@ if (!isset($_SESSION['user_id'])) {
                     $errors[] = 'Recipe servings are required.';
                 }
 
-                if ($image === '') {
-                    $errors[] = 'Recipe image URL is required.';
-                }
-
                 if (empty($steps)){
                     $errors[] = 'At least one step is required.';
                 }
 
+                if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+                    $errors[] = 'Recipe image is required.';
+                }
+
                 if (empty($errors)) {
+                    $max_bytes = 2 * 1024 * 1024;
+                    if ($_FILES['image']['size'] > $max_bytes) {
+                        $errors[] = 'Image must be 2 MB or smaller.';
+                        }
+                }
+
+                if (empty($errors)) {
+                    $finfo = new finfo(FILEINFO_MIME_TYPE);
+
+                    $mime = $finfo->file(
+                        $_FILES['image']['tmp_name']
+                    );
+
+                    $ext_map = [
+                        'image/jpeg' => 'jpg',
+                        'image/png' => 'png',
+                        'image/webp' => 'webp',
+                    ];
+
+                    if (!isset($ext_map[$mime])) {
+                        $errors[] = 'Image type is not allowed.';
+                    }
+                }
+
+                if (empty($errors)) {
+                    $ext = $ext_map[$mime];
+
+                    $safe_name = bin2hex(random_bytes(16)) . '.' . $ext;
+                }
+
+                if (empty($errors)) {
+                    $target = $upload_folder . $safe_name;
+
+                    if (!move_uploaded_file(
+                        $_FILES['image']['tmp_name'],
+                        $target
+                    )) {
+                        $errors[] = 'Could not save image.';
+                    }
+                }
+
+                if (empty($errors)) {
+                    $image = 'assets/images/uploads/' . $safe_name;
+
                     $result = mysqli_execute_query(
                         $conn,
                         'INSERT INTO recipes (title, description, subtext, category_id, image, servings)
@@ -161,6 +204,7 @@ if (!isset($_SESSION['user_id'])) {
                     $success = true;
                 }
             }
+
         ?>
 
         <?php if (!empty($errors)): ?>

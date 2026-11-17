@@ -1,3 +1,9 @@
+<?php
+declare(strict_types=1);
+
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +35,18 @@
         <div>
             <a href="login.php">Log In</a>
         </div>
+
+        <?php if (isset($_SESSION['user_id'])) { ?>
+            <div>
+                <a href="logout.php">Log Out</a>
+            </div>
+                
+        <?php } ?>
         
+    </div>
+
+    <div class="lognav">
+        <a href="index.php">Back</a>
     </div>
     
 </body>

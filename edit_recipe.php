@@ -33,10 +33,6 @@ if (!isset($_SESSION['user_id'])) {
         <div>
             <a href="edit_recipe.php"><h4>Edit Recipes</h4></a>
         </div>
-        
-        <div>
-            <a href="search_recipe.php"><h4>Search Recipes</h4></a>
-        </div>
 
         <div>
             <a href="account.php"><h4>Log In</h4></a>
@@ -65,12 +61,6 @@ if (!isset($_SESSION['user_id'])) {
         <a href="update_recipe.php">
             <div>
                 <h3>Update Recipes</h3>
-            </div>
-        </a>
-
-        <a href="read_recipe.php">
-            <div>
-                <h3>View Recipes</h3>
             </div>
         </a>
 

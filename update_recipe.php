@@ -32,9 +32,12 @@ if (!isset($_SESSION['user_id'])) {
             <h1>IDM 232</h1>
         </div>
 
-        <div>
-            <a href="edit_recipe.php"><h4>Edit Recipes</h4></a>
-        </div>
+        <?php if (isset($_SESSION['user_id'])) { ?>
+            <div>
+                <a href="edit_recipe.php">Edit Recipes</a>
+            </div>
+                
+        <?php } ?>
 
         <div>
             <a href="account.php"><h4>Log In</h4></a>

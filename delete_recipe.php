@@ -1,14 +1,49 @@
-<?php 
- declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 session_start();
 
 require 'config.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: account.php');
-    exit;
+  header('Location: account.php');
+  exit;
 }
+
+
+$errors = [];
+$success = isset($_GET['deleted']);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $recipe_id = (int) ($_POST['recipe_id'] ?? 0);
+
+  if ($recipe_id <= 0) {
+    $errors[] = 'Please select a recipe.';
+  }
+
+  if (empty($errors)) {
+    mysqli_execute_query(
+      $conn,
+      'DELETE FROM recipes WHERE id = ?',
+      [$recipe_id]
+    );
+
+    header('Location: delete_recipe.php?deleted=1');
+    exit;
+  }
+}
+
+$recipes_result = mysqli_execute_query(
+  $conn,
+  'SELECT id, title
+   FROM recipes
+   ORDER BY title'
+);
+
+$recipes = mysqli_fetch_all(
+  $recipes_result,
+  MYSQLI_ASSOC
+);
 ?>
 
 <!DOCTYPE html>
@@ -20,46 +55,6 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <?php
-    
-    $recipes_result = mysqli_execute_query(
-        $conn,
-        'SELECT id, title FROM recipes ORDER BY title'
-    );
-
-    $recipes = mysqli_fetch_all($recipes_result, MYSQLI_ASSOC);
-    
-    
-    ?>
-
-
-
-    <?php
-
-    $errors = [];
-    $success = false;
-    
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        $recipe_id = (int) ($_POST['recipe_id'] ?? 0);
-
-        if ($recipe_id <= 0) {
-            $errors[] = 'Please select a recipe.';
-        }
-
-        if (empty($errors)) {
-            mysqli_execute_query(
-                $conn, 'DELETE FROM recipes WHERE id = ?', [$recipe_id]
-        );
-
-            $success = true;
-        }
-
-    }
-
-    ?>
-
-    
 
     <header>
         <div>
